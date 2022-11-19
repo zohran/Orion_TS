@@ -1,0 +1,185 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "ZohranSprint4Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ZohranSprint4Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ZohranSprint4Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "ZohranSprint4Stack.template.json",
+        "tags": {
+          "cohort": "sculptor",
+          "Name": "ZohranRasheed"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/941704e87ecab0fd575e077f135bfebabb4ee9841b25d25e38ec719f59f7d65a.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ZohranSprint4Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ZohranSprint4Stack.assets"
+      ],
+      "metadata": {
+        "/ZohranSprint4Stack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "cohort",
+                "Value": "sculptor"
+              },
+              {
+                "Key": "Name",
+                "Value": "ZohranRasheed"
+              }
+            ]
+          }
+        ],
+        "/ZohranSprint4Stack/ZohranLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ZohranLayerFDB29BC5"
+          }
+        ],
+        "/ZohranSprint4Stack/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Role1ABCC5F0"
+          }
+        ],
+        "/ZohranSprint4Stack/ZohranRasheed/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ZohranRasheed08D2BC91"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohran34EED5C6"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/CloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranCloudWatchRole03DFEA80"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Account": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranAccountA4AEFD70"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranDeploymentE94387B2013b812fe5c6d3ff16469a1f1f3c4fba"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranDeploymentStageprod19FFFEA0"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranEndpointD1CF8BF4"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/{proxy+}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranproxy027B46FA"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranproxyANYApiPermissionZohranSprint4StackAPIZohran98833182ANYproxyC1568C83"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranproxyANYApiPermissionTestZohranSprint4StackAPIZohran98833182ANYproxyD0A9C6FA"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranproxyANY0869C6AC"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/ANY/ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranANYApiPermissionZohranSprint4StackAPIZohran98833182ANYF5670582"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/ANY/ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranANYApiPermissionTestZohranSprint4StackAPIZohran98833182ANY2278F2F1"
+          }
+        ],
+        "/ZohranSprint4Stack/API_Zohran/Default/ANY/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "APIZohranANY717701BA"
+          }
+        ],
+        "/ZohranSprint4Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ZohranSprint4Stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/ZohranSprint4Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ZohranSprint4Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ZohranSprint4Stack"
+    }
+  }
+}

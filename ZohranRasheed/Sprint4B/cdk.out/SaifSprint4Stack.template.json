@@ -1,0 +1,780 @@
+{
+ "Resources": {
+  "SaifLayerCA76F327": {
+   "Type": "AWS::Lambda::LayerVersion",
+   "Properties": {
+    "Content": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "10bcc30b4cfd218ae386e95f31a05c712d223ea6466db96e05a2c838997489c5.zip"
+    }
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifLayer/Resource",
+    "aws:asset:path": "asset.10bcc30b4cfd218ae386e95f31a05c712d223ea6466db96e05a2c838997489c5",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
+   }
+  },
+  "Role1ABCC5F0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "Cloud watch Role",
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/CloudWatchFullAccess"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cohort",
+      "Value": "sculptor"
+     },
+     {
+      "Key": "Name",
+      "Value": "MSaif"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/Role/Resource"
+   }
+  },
+  "MSaif3A88E130": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "02ca54341ba9e5be7b041b9f7a03cb9fd26b9a63d3d158ba5d27e4137ab80d23.zip"
+    },
+    "Role": {
+     "Fn::GetAtt": [
+      "Role1ABCC5F0",
+      "Arn"
+     ]
+    },
+    "Handler": "api_backend.handler",
+    "Layers": [
+     {
+      "Ref": "SaifLayerCA76F327"
+     }
+    ],
+    "Runtime": "nodejs14.x",
+    "Tags": [
+     {
+      "Key": "cohort",
+      "Value": "sculptor"
+     },
+     {
+      "Key": "Name",
+      "Value": "MSaif"
+     }
+    ],
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "Role1ABCC5F0"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/MSaif/Resource",
+    "aws:asset:path": "asset.02ca54341ba9e5be7b041b9f7a03cb9fd26b9a63d3d158ba5d27e4137ab80d23",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "SaifApi9A8D2D95": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Name": "SaifApi",
+    "Tags": [
+     {
+      "Key": "cohort",
+      "Value": "sculptor"
+     },
+     {
+      "Key": "Name",
+      "Value": "MSaif"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Resource"
+   }
+  },
+  "SaifApiCloudWatchRoleE1542C6C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "cohort",
+      "Value": "sculptor"
+     },
+     {
+      "Key": "Name",
+      "Value": "MSaif"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/CloudWatchRole/Resource"
+   }
+  },
+  "SaifApiAccount19D58EE6": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "SaifApiCloudWatchRoleE1542C6C",
+      "Arn"
+     ]
+    }
+   },
+   "DependsOn": [
+    "SaifApi9A8D2D95"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Account"
+   }
+  },
+  "SaifApiDeployment562DCFD899a25b21679db63d1df34e9ac6d18856": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "SaifApi9A8D2D95"
+    },
+    "Description": "Automatically created by the RestApi construct"
+   },
+   "DependsOn": [
+    "SaifApiproxyANY27E9BF53",
+    "SaifApiproxy5F51E5E2",
+    "SaifApiANYC6B39A05"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Deployment/Resource"
+   }
+  },
+  "SaifApiDeploymentStageprodDD57E0A4": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "RestApiId": {
+     "Ref": "SaifApi9A8D2D95"
+    },
+    "DeploymentId": {
+     "Ref": "SaifApiDeployment562DCFD899a25b21679db63d1df34e9ac6d18856"
+    },
+    "StageName": "prod",
+    "Tags": [
+     {
+      "Key": "cohort",
+      "Value": "sculptor"
+     },
+     {
+      "Key": "Name",
+      "Value": "MSaif"
+     }
+    ]
+   },
+   "DependsOn": [
+    "SaifApiAccount19D58EE6"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/DeploymentStage.prod/Resource"
+   }
+  },
+  "SaifApiproxy5F51E5E2": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "SaifApi9A8D2D95",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "{proxy+}",
+    "RestApiId": {
+     "Ref": "SaifApi9A8D2D95"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/{proxy+}/Resource"
+   }
+  },
+  "SaifApiproxyANYApiPermissionSaifSprint4StackSaifApiAA33984DANYproxy985A2F17": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "MSaif3A88E130",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "SaifApi9A8D2D95"
+       },
+       "/",
+       {
+        "Ref": "SaifApiDeploymentStageprodDD57E0A4"
+       },
+       "/*/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/{proxy+}/ANY/ApiPermission.SaifSprint4StackSaifApiAA33984D.ANY..{proxy+}"
+   }
+  },
+  "SaifApiproxyANYApiPermissionTestSaifSprint4StackSaifApiAA33984DANYproxy35342D9E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "MSaif3A88E130",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "SaifApi9A8D2D95"
+       },
+       "/test-invoke-stage/*/*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/{proxy+}/ANY/ApiPermission.Test.SaifSprint4StackSaifApiAA33984D.ANY..{proxy+}"
+   }
+  },
+  "SaifApiproxyANY27E9BF53": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "ANY",
+    "ResourceId": {
+     "Ref": "SaifApiproxy5F51E5E2"
+    },
+    "RestApiId": {
+     "Ref": "SaifApi9A8D2D95"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "MSaif3A88E130",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/{proxy+}/ANY/Resource"
+   }
+  },
+  "SaifApiANYApiPermissionSaifSprint4StackSaifApiAA33984DANY9F17239A": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "MSaif3A88E130",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "SaifApi9A8D2D95"
+       },
+       "/",
+       {
+        "Ref": "SaifApiDeploymentStageprodDD57E0A4"
+       },
+       "/*/"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/ANY/ApiPermission.SaifSprint4StackSaifApiAA33984D.ANY.."
+   }
+  },
+  "SaifApiANYApiPermissionTestSaifSprint4StackSaifApiAA33984DANY0B099F2E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "MSaif3A88E130",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "SaifApi9A8D2D95"
+       },
+       "/test-invoke-stage/*/"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/ANY/ApiPermission.Test.SaifSprint4StackSaifApiAA33984D.ANY.."
+   }
+  },
+  "SaifApiANYC6B39A05": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "HttpMethod": "ANY",
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "SaifApi9A8D2D95",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "SaifApi9A8D2D95"
+    },
+    "AuthorizationType": "NONE",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "MSaif3A88E130",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/SaifApi/Default/ANY/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WPwU7DMAyGn2X3NNDBgWs3xAnEVCSuk5eazmubVLHDqKq+O0k7xHby59/2b3ut17nOV3DmzFRN1tJBjx8CplFR2o8tdIcK9PgKA/pP9EzOqu2XvclfgjVyKVzzDn1HnFomxQ97YEZhXaQQc70JpkHZAKMi6PRYuhbTWIqTgp5qEDzDkLanK0pkKXqaW/6xMMYFK+oZ+9YNHUaM6lUWv6ln3wXiqAve4Lx3593P8KdcjBd+Qzm6KkkLTZOaD08mZOtUeA/SB7mZirx1tiKZf7auQn3iu+/8UedP+n51YqLMx2upQ10u8RfM/06YgQEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "SaifSprint4Stack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "SaifApiEndpointEAF5D696": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "SaifApi9A8D2D95"
+      },
+      ".execute-api.",
+      {
+       "Ref": "AWS::Region"
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "SaifApiDeploymentStageprodDD57E0A4"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,788 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.25"
+        }
+      },
+      "ZohranSprint4Stack": {
+        "id": "ZohranSprint4Stack",
+        "path": "ZohranSprint4Stack",
+        "children": {
+          "ZohranLayer": {
+            "id": "ZohranLayer",
+            "path": "ZohranSprint4Stack/ZohranLayer",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ZohranSprint4Stack/ZohranLayer/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ZohranSprint4Stack/ZohranLayer/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.27.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ZohranSprint4Stack/ZohranLayer/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.27.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ZohranSprint4Stack/ZohranLayer/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::LayerVersion",
+                  "aws:cdk:cloudformation:props": {
+                    "content": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "7c92787e64785d573e93e612ebd91253502281e29490236a6c975167c7f76370.zip"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnLayerVersion",
+                  "version": "2.27.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.LayerVersion",
+              "version": "2.27.0"
+            }
+          },
+          "Role": {
+            "id": "Role",
+            "path": "ZohranSprint4Stack/Role",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ZohranSprint4Stack/Role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "description": "Cloud watch Role",
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/CloudWatchFullAccess"
+                          ]
+                        ]
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "key": "cohort",
+                        "value": "sculptor"
+                      },
+                      {
+                        "key": "Name",
+                        "value": "ZohranRasheed"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.27.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.27.0"
+            }
+          },
+          "ZohranRasheed": {
+            "id": "ZohranRasheed",
+            "path": "ZohranSprint4Stack/ZohranRasheed",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "ZohranSprint4Stack/ZohranRasheed/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "ZohranSprint4Stack/ZohranRasheed/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.27.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "ZohranSprint4Stack/ZohranRasheed/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.27.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ZohranSprint4Stack/ZohranRasheed/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "f22bf1ceaf750f74edaba63c4e115e5ba23298d3ac20e911663d49e0ae579b7f.zip"
+                    },
+                    "role": {
+                      "Fn::GetAtt": [
+                        "Role1ABCC5F0",
+                        "Arn"
+                      ]
+                    },
+                    "handler": "api_backend.handler",
+                    "layers": [
+                      {
+                        "Ref": "ZohranLayerFDB29BC5"
+                      }
+                    ],
+                    "runtime": "nodejs14.x",
+                    "tags": [
+                      {
+                        "key": "cohort",
+                        "value": "sculptor"
+                      },
+                      {
+                        "key": "Name",
+                        "value": "ZohranRasheed"
+                      }
+                    ],
+                    "timeout": 300
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.27.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.27.0"
+            }
+          },
+          "API_Zohran": {
+            "id": "API_Zohran",
+            "path": "ZohranSprint4Stack/API_Zohran",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ZohranSprint4Stack/API_Zohran/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "API_Zohran",
+                    "tags": [
+                      {
+                        "key": "cohort",
+                        "value": "sculptor"
+                      },
+                      {
+                        "key": "Name",
+                        "value": "ZohranRasheed"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.27.0"
+                }
+              },
+              "CloudWatchRole": {
+                "id": "CloudWatchRole",
+                "path": "ZohranSprint4Stack/API_Zohran/CloudWatchRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ZohranSprint4Stack/API_Zohran/CloudWatchRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "apigateway.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+                              ]
+                            ]
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "cohort",
+                            "value": "sculptor"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "ZohranRasheed"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.27.0"
+                }
+              },
+              "Account": {
+                "id": "Account",
+                "path": "ZohranSprint4Stack/API_Zohran/Account",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::Account",
+                  "aws:cdk:cloudformation:props": {
+                    "cloudWatchRoleArn": {
+                      "Fn::GetAtt": [
+                        "APIZohranCloudWatchRole03DFEA80",
+                        "Arn"
+                      ]
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnAccount",
+                  "version": "2.27.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "ZohranSprint4Stack/API_Zohran/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ZohranSprint4Stack/API_Zohran/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "APIZohran34EED5C6"
+                        },
+                        "description": "Automatically created by the RestApi construct"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.27.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "ZohranSprint4Stack/API_Zohran/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ZohranSprint4Stack/API_Zohran/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "restApiId": {
+                          "Ref": "APIZohran34EED5C6"
+                        },
+                        "deploymentId": {
+                          "Ref": "APIZohranDeploymentE94387B2013b812fe5c6d3ff16469a1f1f3c4fba"
+                        },
+                        "stageName": "prod",
+                        "tags": [
+                          {
+                            "key": "cohort",
+                            "value": "sculptor"
+                          },
+                          {
+                            "key": "Name",
+                            "value": "ZohranRasheed"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.27.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "ZohranSprint4Stack/API_Zohran/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.27.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "ZohranSprint4Stack/API_Zohran/Default",
+                "children": {
+                  "{proxy+}": {
+                    "id": "{proxy+}",
+                    "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "APIZohran34EED5C6",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "{proxy+}",
+                            "restApiId": {
+                              "Ref": "APIZohran34EED5C6"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.27.0"
+                        }
+                      },
+                      "ANY": {
+                        "id": "ANY",
+                        "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY",
+                        "children": {
+                          "ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}": {
+                            "id": "ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}",
+                            "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "ZohranRasheed08D2BC91",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "APIZohran34EED5C6"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "APIZohranDeploymentStageprod19FFFEA0"
+                                      },
+                                      "/*/*"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.27.0"
+                            }
+                          },
+                          "ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}": {
+                            "id": "ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}",
+                            "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..{proxy+}",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "ZohranRasheed08D2BC91",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "APIZohran34EED5C6"
+                                      },
+                                      "/test-invoke-stage/*/*"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.27.0"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ZohranSprint4Stack/API_Zohran/Default/{proxy+}/ANY/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "httpMethod": "ANY",
+                                "resourceId": {
+                                  "Ref": "APIZohranproxy027B46FA"
+                                },
+                                "restApiId": {
+                                  "Ref": "APIZohran34EED5C6"
+                                },
+                                "authorizationType": "NONE",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "ZohranRasheed08D2BC91",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.27.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.27.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.ProxyResource",
+                      "version": "2.27.0"
+                    }
+                  },
+                  "ANY": {
+                    "id": "ANY",
+                    "path": "ZohranSprint4Stack/API_Zohran/Default/ANY",
+                    "children": {
+                      "ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..": {
+                        "id": "ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..",
+                        "path": "ZohranSprint4Stack/API_Zohran/Default/ANY/ApiPermission.ZohranSprint4StackAPIZohran98833182.ANY..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ZohranRasheed08D2BC91",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "APIZohran34EED5C6"
+                                  },
+                                  "/",
+                                  {
+                                    "Ref": "APIZohranDeploymentStageprod19FFFEA0"
+                                  },
+                                  "/*/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.27.0"
+                        }
+                      },
+                      "ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..": {
+                        "id": "ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..",
+                        "path": "ZohranSprint4Stack/API_Zohran/Default/ANY/ApiPermission.Test.ZohranSprint4StackAPIZohran98833182.ANY..",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                          "aws:cdk:cloudformation:props": {
+                            "action": "lambda:InvokeFunction",
+                            "functionName": {
+                              "Fn::GetAtt": [
+                                "ZohranRasheed08D2BC91",
+                                "Arn"
+                              ]
+                            },
+                            "principal": "apigateway.amazonaws.com",
+                            "sourceArn": {
+                              "Fn::Join": [
+                                "",
+                                [
+                                  "arn:",
+                                  {
+                                    "Ref": "AWS::Partition"
+                                  },
+                                  ":execute-api:",
+                                  {
+                                    "Ref": "AWS::Region"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "AWS::AccountId"
+                                  },
+                                  ":",
+                                  {
+                                    "Ref": "APIZohran34EED5C6"
+                                  },
+                                  "/test-invoke-stage/*/"
+                                ]
+                              ]
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                          "version": "2.27.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ZohranSprint4Stack/API_Zohran/Default/ANY/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                          "aws:cdk:cloudformation:props": {
+                            "httpMethod": "ANY",
+                            "resourceId": {
+                              "Fn::GetAtt": [
+                                "APIZohran34EED5C6",
+                                "RootResourceId"
+                              ]
+                            },
+                            "restApiId": {
+                              "Ref": "APIZohran34EED5C6"
+                            },
+                            "authorizationType": "NONE",
+                            "integration": {
+                              "type": "AWS_PROXY",
+                              "uri": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    "arn:",
+                                    {
+                                      "Ref": "AWS::Partition"
+                                    },
+                                    ":apigateway:",
+                                    {
+                                      "Ref": "AWS::Region"
+                                    },
+                                    ":lambda:path/2015-03-31/functions/",
+                                    {
+                                      "Fn::GetAtt": [
+                                        "ZohranRasheed08D2BC91",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/invocations"
+                                  ]
+                                ]
+                              },
+                              "integrationHttpMethod": "POST"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                          "version": "2.27.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                      "version": "2.27.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.27.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.LambdaRestApi",
+              "version": "2.27.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "ZohranSprint4Stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "ZohranSprint4Stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.27.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "ZohranSprint4Stack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.27.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.1.25"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.27.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.27.0"
+    }
+  }
+}

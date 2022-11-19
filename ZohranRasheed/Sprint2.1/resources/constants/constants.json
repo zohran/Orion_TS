@@ -1,0 +1,15 @@
+{
+    "URL_TO_CHECK": [
+        "https://www.google.com",
+        "https://www.bing.com",
+        "https://www.facebook.com"
+    ],
+    "NAMESPACE": "ZOHRAN_NAMESPACE",
+    "METRIC_NAME_AVAILABLILTY": "URL_AVAILABILITY",
+    "METRIC_NAME_LATENCY": "URL_LATENCY",
+    "METRIC_PERIOD": 1,
+    "EVALUATION_PERIOD": 1,
+    "LATENCY_THRESHOLD": 1000,
+    "AVAILABILITY_THRESHOLD": 0,
+    "EMAIL_TO_SEND": "zohran.rasheed.skipq@gmail.com"
+}
